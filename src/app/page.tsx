@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { CV_DATA } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
@@ -17,19 +17,50 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.15,
+      delayChildren: 0.3
     }
   }
 };
 
 const item = {
-  hidden: { y: 20, opacity: 0 },
-  show: { y: 0, opacity: 1 }
+  hidden: { y: 30, opacity: 0, filter: "blur(10px)" },
+  show: { 
+    y: 0, 
+    opacity: 1, 
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 20
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+  hover: { 
+    y: -10, 
+    scale: 1.02,
+    transition: { type: "spring", stiffness: 400, damping: 10 }
+  }
 };
 
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   return (
     <main className="relative min-h-screen">
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-primary z-100 origin-left"
+        style={{ scaleX }}
+      />
       <BackgroundGradient />
       <Navbar />
 
@@ -69,9 +100,11 @@ export default function Home() {
               {CV_DATA.summary}
             </motion.p>
             <motion.div variants={item} className="flex flex-wrap gap-4">
-              <Button size="lg" className="rounded-full px-8" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
-                View My Projects
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button size="lg" className="rounded-full px-8 shadow-lg shadow-primary/20" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+                  View My Projects
+                </Button>
+              </motion.div>
               <div className="flex gap-2">
                 {CV_DATA.links.map((link) => (
                   <a 
@@ -148,12 +181,13 @@ export default function Home() {
             {CV_DATA.projects.map((project, index) => (
               <motion.div
                 key={project.title}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="show"
+                whileHover="hover"
+                viewport={{ once: true, margin: "-100px" }}
               >
-                <Card className="h-full flex flex-col glass overflow-hidden group border-muted/50 transition-all hover:shadow-2xl hover:-translate-y-2">
+                <Card className="h-full flex flex-col glass overflow-hidden group border-muted/50 transition-shadow hover:shadow-2xl hover:shadow-primary/10">
                   <div className="h-48 bg-linear-to-br from-primary/10 to-accent-foreground/10 relative overflow-hidden">
                     <div className="absolute inset-0 flex items-center justify-center">
                        <span className="text-4xl font-bold opacity-20 pointer-events-none">{project.title}</span>
@@ -289,13 +323,15 @@ export default function Home() {
               I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a 
+              <motion.a 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 href={`mailto:${CV_DATA.email}`}
-                className={cn(buttonVariants({ size: "lg" }), "rounded-full px-12 group")}
+                className={cn(buttonVariants({ size: "lg" }), "rounded-full px-12 group shadow-xl shadow-primary/20")}
               >
                 Say Hello
                 <Mail className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </motion.a>
               <div className="flex gap-4">
                 {CV_DATA.links.map((link) => (
                   <a 

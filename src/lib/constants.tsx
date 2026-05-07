@@ -41,6 +41,18 @@ export const CV_DATA = {
   ],
   projects: [
     {
+      title: "MoCommerce Store",
+      description: "A high-end, high-performance digital storefront engineered for speed, responsiveness, and a flawless user experience.",
+      tech: ["Next.js 16", "React 19", "Tailwind CSS 4", "Zustand", "TanStack Query v5", "Motion", "shadcn/ui", "Stripe"],
+      links: { live: "#", github: "#" }, 
+      highlights: [
+        "Glassmorphism UI with fluid motion and celebratory effects (Confetti).",
+        "Dynamic Cart with persistent storage and numeric pagination system.",
+        "Advanced Admin Control Center with Recharts analytics and inventory management.",
+        "Secure Stripe integration with optimistic UI updates and resilient UX states."
+      ]
+    },
+    {
       title: "Blogin",
       description: "Full-stack blog platform built with Next.js 16 App Router and Convex real-time backend.",
       tech: ["Next.js 16", "TypeScript", "Tailwind CSS", "Convex"],
