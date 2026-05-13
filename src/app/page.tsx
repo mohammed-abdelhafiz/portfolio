@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, type Variants } from "framer-motion";
 import { CV_DATA } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { Navbar } from "@/components/Navbar";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
 import { cn } from "@/lib/utils";
 
-const container = {
+const container: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -23,7 +23,7 @@ const container = {
   }
 };
 
-const item = {
+const item: Variants = {
   hidden: { y: 30, opacity: 0, filter: "blur(10px)" },
   show: { 
     y: 0, 
@@ -37,7 +37,7 @@ const item = {
   }
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0 },
   hover: { 
