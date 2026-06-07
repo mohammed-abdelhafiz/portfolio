@@ -44,7 +44,7 @@ export const CV_DATA = {
       title: "MoCommerce Store",
       description: "A high-end, high-performance digital storefront engineered for speed, responsiveness, and a flawless user experience.",
       tech: ["Next.js 16", "React 19", "Tailwind CSS 4", "Zustand", "TanStack Query v5", "Motion", "shadcn/ui", "Stripe"],
-      links: { live: "#", github: "#" }, 
+      links: { live: "https://mo-commerce-app.vercel.app", github: "https://github.com/mohammed-abdelhafiz/MoCommerce-app" }, 
       highlights: [
         "Glassmorphism UI with fluid motion and celebratory effects (Confetti).",
         "Dynamic Cart with persistent storage and numeric pagination system.",
