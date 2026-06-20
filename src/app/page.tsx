@@ -1,361 +1,386 @@
-"use client";
-
-import { motion, useScroll, useSpring, type Variants } from "framer-motion";
-import { CV_DATA } from "@/lib/constants";
-import { Button } from "@/components/ui/button";
-import { buttonVariants } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExternalLink, Mail, MapPin, Award, BookOpen, Briefcase, Code } from "lucide-react";
+import Image from "next/image";
+import {
+  ArrowRight,
+  Award,
+  BookOpen,
+  Briefcase,
+  CheckCircle2,
+  Code2,
+  Download,
+  ExternalLink,
+  GraduationCap,
+  Mail,
+  MapPin,
+  ShieldCheck,
+} from "lucide-react";
 import { Navbar } from "@/components/Navbar";
-import { BackgroundGradient } from "@/components/BackgroundGradient";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { CV_DATA } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const container: Variants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.3
-    }
-  }
-};
+const topSkills = CV_DATA.skills;
+const featuredProjects = CV_DATA.projects.slice(0, 4);
 
-const item: Variants = {
-  hidden: { y: 30, opacity: 0, filter: "blur(10px)" },
-  show: { 
-    y: 0, 
-    opacity: 1, 
-    filter: "blur(0px)",
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20
-    }
-  }
-};
+const projectPreviewStyles = [
+  {
+    panel: "bg-[linear-gradient(135deg,var(--primary),var(--accent))]",
+    metric: "Checkout",
+    stat: "Stripe",
+  },
+  {
+    panel: "bg-[linear-gradient(135deg,var(--foreground),var(--primary))]",
+    metric: "Realtime",
+    stat: "Convex",
+  },
+  {
+    panel: "bg-[linear-gradient(135deg,var(--primary),var(--secondary))]",
+    metric: "Auth",
+    stat: "JWT",
+  },
+  {
+    panel: "bg-[linear-gradient(135deg,var(--foreground),var(--accent))]",
+    metric: "CLI",
+    stat: "npm",
+  },
+];
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-  hover: { 
-    y: -10, 
-    scale: 1.02,
-    transition: { type: "spring", stiffness: 400, damping: 10 }
-  }
-};
-
-export default function Home() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+function ProjectPreview({ project, index }: { project: (typeof featuredProjects)[number]; index: number }) {
+  const style = projectPreviewStyles[index % projectPreviewStyles.length];
 
   return (
-    <main className="relative min-h-screen">
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-primary z-100 origin-left"
-        style={{ scaleX }}
-      />
-      <BackgroundGradient />
+    <div className="flex min-h-72 flex-col gap-4 border-b bg-secondary p-5 md:border-b-0 md:border-r">
+      <div className="flex h-8 items-center gap-2 border bg-background px-3">
+        <span className="size-2 bg-primary" />
+        <span className="size-2 bg-accent" />
+        <span className="size-2 bg-muted-foreground" />
+        <span className="ml-2 h-2 flex-1 bg-muted" />
+      </div>
+      <div className={cn("grid min-h-32 place-items-center border p-5 text-primary-foreground", style.panel)}>
+        <div className="w-full">
+          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.08em] opacity-80">
+            {style.metric}
+          </p>
+          <p className="text-3xl font-bold leading-none">{style.stat}</p>
+          <div className="mt-5 grid grid-cols-3 gap-2">
+            <span className="h-10 border border-primary-foreground/25 bg-primary-foreground/15" />
+            <span className="h-10 border border-primary-foreground/25 bg-primary-foreground/15" />
+            <span className="h-10 border border-primary-foreground/25 bg-primary-foreground/15" />
+          </div>
+        </div>
+      </div>
+      <div className="border bg-background p-5">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <Badge variant="secondary" className="rounded-none text-sm">
+            0{index + 1}
+          </Badge>
+          <p className="text-right text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+            {project.tech.slice(0, 2).join(" / ")}
+          </p>
+        </div>
+        <div className="grid gap-2" aria-hidden="true">
+          <span className="h-2 w-5/6 bg-border" />
+          <span className="h-2 w-2/3 bg-border" />
+          <span className="h-2 w-3/4 bg-border" />
+        </div>
+        <div className="mt-5 grid grid-cols-2 gap-2">
+          <span className="h-12 border bg-card" />
+          <span className="h-12 border bg-card" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <main id="main-content" className="min-h-screen bg-background">
+      <a
+        href="#about"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:border focus:bg-background focus:px-4 focus:py-3 focus:text-sm focus:font-semibold"
+      >
+        Skip to main content
+      </a>
       <Navbar />
 
-      <div className="container mx-auto px-6 pt-32 pb-20">
-        {/* Hero Section */}
-        <section id="about" className="mb-24">
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="max-w-4xl"
-          >
-            <motion.div variants={item}>
-              <Badge
-                variant="outline"
-                className="mb-4 py-1.5 px-4 border-emerald-600/40 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-semibold cursor-pointer hover:bg-emerald-500/25 transition-all duration-300 backdrop-blur-sm"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <span className="relative mr-2 flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600" />
-                </span>
-                Open to Work
-              </Badge>
-            </motion.div>
-            <motion.h1 
-              variants={item}
-              className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight"
-            >
-              Building the future of the <span className="text-gradient">Web</span>
-            </motion.h1>
-            <motion.p 
-              variants={item}
-              className="text-xl text-muted-foreground mb-8 max-w-2xl"
-            >
-              Hi, I'm <span className="text-foreground font-semibold">{CV_DATA.name}</span>. 
-              {CV_DATA.summary}
-            </motion.p>
-            <motion.div variants={item} className="flex flex-wrap gap-4">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" className="rounded-full px-8 shadow-lg shadow-primary/20" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
-                  View My Projects
-                </Button>
-              </motion.div>
-              <div className="flex gap-2">
-                {CV_DATA.links.map((link) => (
-                  <a 
-                    key={link.name} 
-                    href={link.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-full")}
-                  >
-                    <link.icon className="h-4 w-4" />
-                  </a>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        </section>
-
-        {/* Skills Section */}
-        <section id="skills" className="mb-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <div className="flex items-center gap-4 mb-10">
-              <div className="h-px flex-1 bg-border" />
-              <h2 className="text-3xl font-bold flex items-center gap-2">
-                <Code className="text-primary" /> Technical Skills
-              </h2>
-              <div className="h-px flex-1 bg-border" />
+      <section id="about" className="overflow-hidden border-b">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 md:py-24 lg:grid-cols-12 lg:py-28 2xl:px-0">
+          <div className="lg:col-span-8">
+            <Badge variant="secondary" className="mb-8 rounded-none px-3 py-1 text-sm font-semibold">
+              Open to work
+            </Badge>
+            <h1 className="mb-8 max-w-5xl text-4xl font-bold leading-none tracking-normal text-foreground md:text-5xl lg:text-7xl">
+              Mohamed Abdelhafiz builds production-ready web products.
+            </h1>
+            <p className="max-w-[70ch] text-lg leading-relaxed text-muted-foreground md:text-xl">
+              {CV_DATA.summary} I build sharp interfaces, resilient APIs, and clear product flows from idea to deployment.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#projects" className={cn(buttonVariants(), "rounded-none")}>
+                View projects
+                <ArrowRight data-icon="inline-end" />
+              </a>
+              <a href={CV_DATA.cvUrl} download className={cn(buttonVariants({ variant: "outline" }), "rounded-none")}>
+                <Download data-icon="inline-start" />
+                Download CV
+              </a>
+              <a href={`mailto:${CV_DATA.email}`} className={cn(buttonVariants({ variant: "outline" }), "rounded-none")}>
+                <Mail data-icon="inline-start" />
+                Contact
+              </a>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {CV_DATA.skills.map((skill, index) => (
-                <motion.div
-                  key={skill.category}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Card className="h-full glass hover:border-primary/30 transition-all group">
-                    <CardHeader>
-                      <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                        {skill.category}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-wrap gap-2">
-                      {skill.items.map((item) => (
-                        <Badge key={item} variant="secondary" className="bg-secondary/50 font-medium">
-                          {item}
-                        </Badge>
-                      ))}
-                    </CardContent>
-                  </Card>
-                </motion.div>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {[
+                { icon: MapPin, label: "Based in", value: CV_DATA.location },
+                { icon: GraduationCap, label: "Education", value: "Benha CS graduate" },
+                { icon: Award, label: "NTI score", value: "85%" },
+              ].map((item) => (
+                <div key={item.label} className="border bg-card p-4">
+                  <div className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary">
+                    <item.icon aria-hidden="true" className="size-4" />
+                    {item.label}
+                  </div>
+                  <p className="text-lg font-semibold leading-tight">{item.value}</p>
+                </div>
               ))}
             </div>
-          </motion.div>
-        </section>
 
-        {/* Projects Section */}
-        <section id="projects" className="mb-24">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="h-px flex-1 bg-border" />
-            <h2 className="text-3xl font-bold flex items-center gap-2">
-              <Briefcase className="text-primary" /> Featured Projects
-            </h2>
-            <div className="h-px flex-1 bg-border" />
+            <div className="my-10 h-px w-full bg-border" />
+
+            <div className="grid gap-8 md:grid-cols-2">
+              <article className="flex flex-col items-start gap-4">
+                <Code2 aria-hidden="true" className="size-8 text-primary" />
+                <div>
+                  <h2 className="mb-3 text-2xl font-semibold leading-tight">Ship full-stack features</h2>
+                  <p className="max-w-[60ch] text-base leading-relaxed text-muted-foreground">
+                    I build typed React and Next.js frontends connected to structured Node, Express, MongoDB, and Convex backends.
+                  </p>
+                </div>
+              </article>
+
+              <article className="flex flex-col items-start gap-4">
+                <ShieldCheck aria-hidden="true" className="size-8 text-primary" />
+                <div>
+                  <h2 className="mb-3 text-2xl font-semibold leading-tight">Keep systems dependable</h2>
+                  <p className="max-w-[60ch] text-base leading-relaxed text-muted-foreground">
+                    I care about validation, auth, database indexing, optimistic states, and recoverable user flows.
+                  </p>
+                </div>
+                <a href={`mailto:${CV_DATA.email}`} className={cn(buttonVariants({ variant: "outline" }), "rounded-none")}>
+                  <Mail data-icon="inline-start" />
+                  Start a conversation
+                </a>
+              </article>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {CV_DATA.projects.map((project, index) => (
-              <motion.div
-                key={project.title}
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="show"
-                whileHover="hover"
-                viewport={{ once: true, margin: "-100px" }}
-              >
-                <Card className="h-full flex flex-col glass overflow-hidden group border-muted/50 transition-shadow hover:shadow-2xl hover:shadow-primary/10">
-                  <div className="h-48 bg-linear-to-br from-primary/10 to-accent-foreground/10 relative overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <span className="text-4xl font-bold opacity-20 pointer-events-none">{project.title}</span>
-                    </div>
-                  </div>
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="text-2xl group-hover:text-primary transition-colors">
-                        {project.title}
-                      </CardTitle>
-                      <div className="flex gap-2">
-                        <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                          <Code className="h-5 w-5" />
-                        </a>
-                        <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                          <ExternalLink className="h-5 w-5" />
-                        </a>
-                      </div>
-                    </div>
-                    <CardDescription className="text-base">
-                      {project.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-1 space-y-4">
-                    <ul className="space-y-2">
-                      {project.highlights.map((h, i) => (
-                        <li key={i} className="text-sm flex items-start gap-2 text-muted-foreground">
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                          {h}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="flex flex-wrap gap-2 pt-4">
-                      {project.tech.map((t) => (
-                        <Badge key={t} variant="outline" className="text-[10px] bg-primary/5 border-primary/20">
-                          {t}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+          <aside className="lg:col-span-4">
+            <div className="relative min-h-[520px] overflow-hidden border bg-card md:min-h-[680px] lg:h-full lg:min-h-[620px]">
+              <Image
+                src="/mohamed-hero-portrait.png"
+                alt="Professional portrait of Mohamed Abdelhafiz"
+                fill
+                priority
+                sizes="(min-width: 1280px) 420px, (min-width: 1024px) 33vw, 100vw"
+                className="object-cover object-[50%_34%]"
+              />
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="skills" className="border-b bg-card">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:py-20 lg:grid-cols-[0.8fr_1.2fr] 2xl:px-0">
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-primary">Technical range</p>
+            <h2 className="mb-8 text-3xl font-bold leading-none md:text-5xl">A practical stack for modern product work.</h2>
+            <p className="max-w-[65ch] text-base leading-relaxed text-muted-foreground">
+              The stack is selected around maintainability: typed UI, predictable state, validated APIs, and data models that can grow.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {topSkills.map((skill) => (
+              <Card key={skill.category} className="rounded-none border bg-background shadow-none">
+                <CardHeader>
+                  <h3 className="text-xl font-semibold leading-tight">{skill.category}</h3>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {skill.items.map((item) => (
+                    <Badge key={item} variant="outline" className="rounded-none text-sm">
+                      {item}
+                    </Badge>
+                  ))}
+                </CardContent>
+              </Card>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Experience & Education */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-24">
-          <section id="experience">
-            <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
-              <Briefcase className="text-primary" /> Experience
-            </h2>
-            <div className="space-y-8 pl-4 border-l-2 border-primary/20">
-              {CV_DATA.experience.map((exp, index) => (
-                <div key={index} className="relative">
-                  <div className="absolute -left-[21px] top-1.5 h-4 w-4 rounded-full bg-primary border-4 border-background" />
-                  <div className="mb-2">
-                    <h3 className="text-xl font-bold">{exp.role}</h3>
-                    <p className="text-primary font-medium">{exp.company}</p>
-                    <p className="text-sm text-muted-foreground">{exp.period}</p>
+      <section id="projects" className="border-b">
+        <div className="mx-auto max-w-7xl px-4 py-16 md:py-24 2xl:px-0">
+          <div className="mb-12 grid gap-8 lg:grid-cols-[0.7fr_1fr]">
+            <div>
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-primary">Selected work</p>
+              <h2 className="mb-8 text-3xl font-bold leading-none md:text-5xl">Projects with product surface and backend depth.</h2>
+            </div>
+            <p className="max-w-[70ch] self-end text-base leading-relaxed text-muted-foreground">
+              These projects show the range from ecommerce and social products to backend APIs and developer tooling.
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            {featuredProjects.map((project, index) => (
+              <article key={project.title} className="group grid border bg-card md:grid-cols-[0.7fr_1fr]">
+                <ProjectPreview project={project} index={index} />
+                <div className="p-6">
+                  <div className="mb-4 flex items-start justify-between gap-4">
+                    <h3 className="text-2xl font-semibold leading-tight group-hover:text-primary">{project.title}</h3>
+                    <div className="flex shrink-0 gap-1">
+                      <a
+                        href={project.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.title} GitHub repository`}
+                        className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background")}
+                      >
+                        <Code2 />
+                      </a>
+                      <a
+                        href={project.links.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${project.title} live project`}
+                        className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background")}
+                      >
+                        <ExternalLink />
+                      </a>
+                    </div>
                   </div>
-                  <p className="text-muted-foreground mb-4">{exp.description}</p>
-                  <ul className="space-y-2">
-                    {exp.highlights.map((h, i) => (
-                      <li key={i} className="text-sm flex items-start gap-2 text-muted-foreground">
-                        <span className="h-1 w-1 rounded-full bg-muted-foreground mt-2 shrink-0" />
-                        {h}
+                  <p className="mb-6 text-base leading-relaxed text-muted-foreground">{project.description}</p>
+                  <ul className="grid gap-3">
+                    {project.highlights.slice(0, 3).map((highlight) => (
+                      <li key={highlight} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                        <CheckCircle2 aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-primary" />
+                        <span>{highlight}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" className="border-b bg-card">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 md:py-20 lg:grid-cols-2 2xl:px-0">
+          <section aria-labelledby="experience-heading" className="border bg-background p-6 md:p-8">
+            <div className="mb-8 flex items-center gap-3">
+              <Briefcase aria-hidden="true" className="size-8 text-primary" />
+              <h2 id="experience-heading" className="text-3xl font-bold leading-none">Experience</h2>
+            </div>
+            <div className="grid gap-8">
+              {CV_DATA.experience.map((item) => (
+                <article key={`${item.company}-${item.role}`} className="border-l-2 border-primary pl-6">
+                  <p className="mb-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary">{item.period}</p>
+                  <h3 className="text-2xl font-semibold leading-tight">{item.role}</h3>
+                  <p className="mt-2 text-base font-semibold">{item.company}</p>
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">{item.description}</p>
+                  <ul className="mt-5 grid gap-3">
+                    {item.highlights.map((highlight) => (
+                      <li key={highlight} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+                        <CheckCircle2 aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-primary" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
               ))}
             </div>
           </section>
 
-          <section id="education" className="space-y-12">
-            <div>
-              <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
-                <BookOpen className="text-primary" /> Education
-              </h2>
-              {CV_DATA.education.map((edu, index) => (
-                <Card key={index} className="glass">
-                  <CardHeader>
-                    <CardTitle className="text-xl">{edu.degree}</CardTitle>
-                    <CardDescription>{edu.school} • {edu.period}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{edu.details}</p>
-                  </CardContent>
-                </Card>
+          <section aria-labelledby="education-heading" className="grid gap-6">
+            <div className="border bg-background p-6 md:p-8">
+              <div className="mb-8 flex items-center gap-3">
+                <BookOpen aria-hidden="true" className="size-8 text-primary" />
+                <h2 id="education-heading" className="text-3xl font-bold leading-none">Education</h2>
+              </div>
+              {CV_DATA.education.map((item) => (
+                <article key={item.degree}>
+                  <h3 className="text-2xl font-semibold leading-tight">{item.degree}</h3>
+                  <p className="mt-2 text-base font-semibold">{item.school} / {item.period}</p>
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">{item.details}</p>
+                </article>
               ))}
             </div>
 
-            <div>
-              <h2 className="text-3xl font-bold mb-8 flex items-center gap-2">
-                <Award className="text-primary" /> Certifications
-              </h2>
-              {CV_DATA.certifications.map((cert, index) => (
-                <Card key={index} className="glass group">
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0">
-                    <div>
-                      <CardTitle className="text-lg">{cert.name}</CardTitle>
-                      <CardDescription>{cert.issuer}</CardDescription>
-                    </div>
-                    <a 
-                      href={cert.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </CardHeader>
-                  <CardContent>
-                    <Badge variant="secondary">Score: {cert.score}</Badge>
-                  </CardContent>
-                </Card>
+            <div className="border bg-background p-6 md:p-8">
+              <div className="mb-8 flex items-center gap-3">
+                <Award aria-hidden="true" className="size-8 text-primary" />
+                <h2 className="text-3xl font-bold leading-none">Certifications</h2>
+              </div>
+              {CV_DATA.certifications.map((cert) => (
+                <article key={cert.name} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold leading-tight">{cert.name}</h3>
+                    <p className="mt-2 text-base text-muted-foreground">{cert.issuer} / Score: {cert.score}</p>
+                  </div>
+                  <a
+                    href={cert.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(buttonVariants({ variant: "outline" }), "rounded-none")}
+                  >
+                    Verify
+                    <ExternalLink data-icon="inline-end" />
+                  </a>
+                </article>
               ))}
             </div>
           </section>
         </div>
+      </section>
 
-        {/* Contact Section */}
-        <section id="contact" className="py-20 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-2xl mx-auto space-y-8"
-          >
-            <h2 className="text-4xl font-bold">Let's work <span className="text-gradient">together</span></h2>
-            <p className="text-xl text-muted-foreground">
-              I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+      <section id="contact" className="border-b">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 md:py-24 lg:grid-cols-[0.8fr_1.2fr] 2xl:px-0">
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-primary">Contact</p>
+            <h2 className="mb-8 text-3xl font-bold leading-none md:text-5xl">Let&apos;s build something clear and durable.</h2>
+            <p className="max-w-[65ch] text-base leading-relaxed text-muted-foreground">
+              Send a role, project brief, or product problem. I&apos;ll reply with next steps and the technical questions that matter.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.a 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href={`mailto:${CV_DATA.email}`}
-                className={cn(buttonVariants({ size: "lg" }), "rounded-full px-12 group shadow-xl shadow-primary/20")}
-              >
-                Say Hello
-                <Mail className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
-              <div className="flex gap-4">
-                {CV_DATA.links.map((link) => (
-                  <a 
-                    key={link.name} 
-                    href={link.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "rounded-full hover:bg-primary/10 hover:text-primary transition-all")}
-                  >
-                    <link.icon className="h-6 w-6" />
-                  </a>
-                ))}
-              </div>
+          </div>
+          <div className="grid gap-4">
+            <a href={`mailto:${CV_DATA.email}`} className="flex min-h-16 items-center gap-4 border bg-card p-4 text-base font-semibold hover:bg-secondary">
+              <Mail aria-hidden="true" className="size-6 text-primary" />
+              {CV_DATA.email}
+            </a>
+            <div className="flex min-h-16 items-center gap-4 border bg-card p-4 text-base font-semibold">
+              <MapPin aria-hidden="true" className="size-6 text-primary" />
+              {CV_DATA.location} / {CV_DATA.phone}
             </div>
-            <div className="pt-12 text-sm text-muted-foreground flex items-center justify-center gap-2">
-              <MapPin className="h-4 w-4" />
-              {CV_DATA.location} • {CV_DATA.phone}
+            <div className="flex flex-wrap gap-3 pt-4">
+              {CV_DATA.links.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target={link.url.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={link.url.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  className={cn(buttonVariants({ variant: "outline" }), "rounded-none")}
+                >
+                  <link.icon data-icon="inline-start" />
+                  {link.name}
+                </a>
+              ))}
             </div>
-          </motion.div>
-        </section>
-      </div>
+          </div>
+        </div>
+      </section>
 
-      <footer className="py-10 border-t border-border/50 text-center text-sm text-muted-foreground">
-        <p>© {new Date().getFullYear()} {CV_DATA.name}. All rights reserved.</p>
+      <footer className="px-4 py-8 text-center text-sm text-muted-foreground">
+        <p>&copy; {new Date().getFullYear()} {CV_DATA.name}. Built with Next.js.</p>
       </footer>
     </main>
   );
