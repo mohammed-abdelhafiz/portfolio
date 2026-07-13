@@ -7,18 +7,20 @@ import { buttonVariants } from "@/components/ui/button";
 import { CV_DATA } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const featuredProjects = CV_DATA.projects.slice(0, 4);
+const featuredProjects = CV_DATA.projects.filter(
+  (p) => p.title !== "Social Media REST API" && p.title !== "Reading Corner"
+);
 
 const projectPreviewStyles = [
   {
     panel: "bg-[linear-gradient(135deg,var(--primary),var(--accent))]",
-    metric: "Checkout",
-    stat: "Stripe",
+    metric: "3D",
+    stat: "WebGL",
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--foreground),var(--primary))]",
-    metric: "Realtime",
-    stat: "Convex",
+    metric: "Checkout",
+    stat: "Stripe",
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--primary),var(--secondary))]",
@@ -27,6 +29,11 @@ const projectPreviewStyles = [
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--foreground),var(--accent))]",
+    metric: "Realtime",
+    stat: "Convex",
+  },
+  {
+    panel: "bg-[linear-gradient(135deg,var(--foreground),var(--secondary))]",
     metric: "CLI",
     stat: "npm",
   },
