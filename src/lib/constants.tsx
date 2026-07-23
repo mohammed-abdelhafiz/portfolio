@@ -3,6 +3,21 @@ import { Mail } from "lucide-react";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
 
+export interface ProjectLink {
+  live?: string;
+  github?: string;
+  githubFrontend?: string;
+  githubBackend?: string;
+}
+
+export interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  links: ProjectLink;
+  highlights: string[];
+}
+
 export const CV_DATA = {
   name: "Mohamed Abdelhafiz",
   title: "Full-Stack Developer",
@@ -10,145 +25,149 @@ export const CV_DATA = {
   phone: "+20 101 732 0178",
   email: "mohamed.abdelhafiz.dev@gmail.com",
   cvUrl: "/Mohamed_Abdelhafiz_CV.pdf",
-  summary: "Full-Stack Developer specializing in React, Next.js, TypeScript, and Node.js. Built production-style apps including a Stripe-integrated e-commerce platform and a social platform, and led frontend development on CollabSpace, a multi-platform 3D collaboration graduation project.",
+  summary:
+    "Full-Stack Developer specializing in React, Next.js, TypeScript, and Node.js. Built scalable full-stack applications featuring real-time communication, authentication, payment processing, and learning management systems. Led frontend development of CollabSpace, a browser-based 3D collaboration platform integrating Unity WebGL, Flutter, and a .NET backend.",
   links: [
-    { 
-      name: "GitHub", 
-      url: "https://github.com/mohammed-abdelhafiz", 
+    {
+      name: "GitHub",
+      url: "https://github.com/mohammed-abdelhafiz",
       icon: (props: IconProps) => (
         <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
         </svg>
-      )
+      ),
     },
-    { 
-      name: "LinkedIn", 
-      url: "https://www.linkedin.com/in/mohamed-abdelhafiz-dev/", 
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/mohamed-abdelhafiz-dev/",
       icon: (props: IconProps) => (
         <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
           <rect x="2" y="9" width="4" height="12" />
           <circle cx="4" cy="4" r="2" />
         </svg>
-      )
+      ),
     },
     { name: "Email", url: "mailto:mohamed.abdelhafiz.dev@gmail.com", icon: Mail },
   ],
   skills: [
     { category: "Languages", items: ["JavaScript", "TypeScript"] },
-    { category: "Frontend", items: ["React.js", "Next.js", "HTML5", "CSS3", "Tailwind CSS", "Framer Motion", "Responsive Design"] },
+    { category: "Frontend", items: ["React.js", "Next.js", "HTML5", "CSS3", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Responsive Design"] },
     { category: "Backend & Real-Time", items: ["Node.js", "Express.js", "REST API Design", "SignalR", "WebSockets", "JWT", "Cookies", "Authentication & Authorization"] },
-    { category: "Database & Caching", items: ["MongoDB", "Mongoose", "PostgreSQL", "Redis"] },
-    { category: "State & Data", items: ["TanStack Query", "Zustand", "nuqs"] },
-    { category: "Payments & Tools", items: ["Stripe", "Git", "GitHub", "Docker", "Postman", "VS Code"] },
-    { category: "Other", items: ["System Design Fundamentals", "Agile/Scrum", "Proxy & Singleton Patterns", "Published CLI tool on npm (12+ weekly downloads)"] },
+    { category: "Database & Caching", items: ["MongoDB", "Mongoose", "PostgreSQL", "Prisma ORM", "Redis"] },
+    { category: "State & Forms", items: ["TanStack Query", "Zustand", "nuqs", "React Hook Form", "Zod"] },
+    { category: "Payments & Tools", items: ["Stripe", "Clerk", "Git", "GitHub", "Docker", "Postman", "VS Code"] },
+    { category: "Other", items: ["System Design Fundamentals", "Agile/Scrum", "Proxy & Singleton Patterns", "published CLI tool on npmjs.com/package/express-ts-new-app"] },
   ],
   projects: [
     {
       title: "CollabSpace",
-      description: "Browser-based 3D virtual collaboration platform integrating Unity WebGL, Flutter mobile, and a .NET 8 + SignalR backend with real-time chat and notifications (Graduation Project).",
-      tech: ["Next.js", "TypeScript", "shadcn/ui", "TanStack Query", "Zustand", "SignalR", "Axios", "nuqs", "Framer Motion"],
-      links: { live: "https://collabspace3d.vercel.app/", github: "https://github.com/mohammed-abdelhafiz/CollabSpace" },
+      description: "Browser-based 3D virtual collaboration platform integrating Unity WebGL 3D, Flutter mobile, and a .NET 8 + SignalR backend with real-time chat and notifications (Graduation Project).",
+      tech: ["Next.js (App Router)", "TypeScript", "shadcn/ui", "TanStack Query", "Zustand", "SignalR", "Axios", "nuqs", "Framer Motion"],
+      links: {
+        live: "https://collabspace3d.vercel.app",
+        github: "https://github.com/CollabSpace-BFCAI-Graduation-Project/WebApp",
+      },
       highlights: [
-        "Built the Next.js frontend for a multi-platform system integrating Unity WebGL 3D, a Flutter mobile app, and a .NET 8 + SignalR + PostgreSQL backend.",
-        "Implemented real-time chat and notifications using a singleton SignalR client shared across the app for consistent WebSocket connection handling.",
-        "Led frontend development as a graduation project with cross-platform coordination."
-      ]
+        "Architected the Next.js frontend to integrate three platforms in real time: Unity WebGL 3D, a Flutter mobile app, and a .NET 8 + SignalR + PostgreSQL backend.",
+        "Designed a singleton SignalR client shared across the app to keep WebSocket connections and real-time state (chat, notifications) consistent across every route.",
+      ],
     },
     {
-      title: "MoCommerce Store",
-      description: "Full-stack ecommerce system with JWT authentication, Stripe payment integration, and Redis caching for cart and session data to avoid re-querying the database on every cart read.",
-      tech: ["Next.js", "React", "Node.js", "Express 5", "MongoDB", "TypeScript", "Stripe", "Redis", "TanStack Query", "Zustand"],
-      links: { live: "https://mo-commerce-app.vercel.app", github: "https://github.com/mohammed-abdelhafiz/MoCommerce-app" }, 
+      title: "Course+",
+      description: "Full-stack learning management system letting instructors create and monetize courses while students purchase and track progress.",
+      tech: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL", "Prisma", "Clerk", "Stripe", "Mux", "UploadThing", "Zustand", "React Hook Form", "Zod"],
+      links: {
+        live: "https://course-plus-lms.vercel.app",
+        github: "https://github.com/mohammed-abdelhafiz/Course-Plus-lms",
+      },
       highlights: [
-        "Built a full-stack e-commerce system with JWT authentication, Stripe payment integration, and Redis caching for cart and session data.",
-        "Structured the storefront's data fetching around Next.js App Router Server Components to eliminate client-side waterfalls.",
-        "Kept the checkout flow's critical path fast on first load with server-first data patterns."
-      ]
+        "Built a full-stack e-learning platform with Clerk authentication and role-based access, letting instructors create and monetize courses while students purchase and track progress.",
+        "Integrated Stripe Checkout with webhooks for course purchases and Mux for adaptive video streaming, backed by Prisma + PostgreSQL and an analytics dashboard for instructor revenue and sales.",
+      ],
+    },
+    {
+      title: "MoCommerce",
+      description: "Full-stack e-commerce system backed by JWT authentication, Stripe payments, and Redis caching for cart and session data.",
+      tech: ["Next.js", "React", "Node.js", "Express 5", "MongoDB", "Mongoose", "TypeScript", "Stripe", "Redis", "TanStack Query", "Zustand"],
+      links: {
+        live: "https://mo-commerce-app.vercel.app",
+        githubFrontend: "https://github.com/mohammed-abdelhafiz/MoCommerce-app",
+        githubBackend: "https://github.com/mohammed-abdelhafiz/MoCommerce-backend",
+      },
+      highlights: [
+        "Cut redundant database reads by caching cart and session data in Redis, backing a full-stack e-commerce platform with JWT authentication and Stripe payments.",
+        "Optimized page performance by structuring the storefront's data fetching around Next.js App Router Server Components, eliminating client-side waterfalls and keeping the checkout flow's critical path fast on first load.",
+      ],
     },
     {
       title: "Postinger",
-      description: "Full-stack social media platform with posts, comments, likes, follow system, and JWT-based authentication with TanStack Query v5 caching and optimistic updates.",
-      tech: ["Next.js", "React", "TypeScript", "Node.js", "Express", "MongoDB", "JWT", "TanStack Query"],
-      links: { live: "https://postinger-social.vercel.app/", github: "https://github.com/mohammed-abdelhafiz/Postinger-Social-media-app" },
+      description: "Full-stack social media platform with posts, comments, likes, follow system, background sync, and optimistic UI updates.",
+      tech: ["Next.js", "React", "TypeScript", "Node.js", "Express", "MongoDB", "Mongoose", "JWT", "TanStack Query"],
+      links: {
+        live: "https://postinger-social.vercel.app",
+        githubFrontend: "https://github.com/mohammed-abdelhafiz/Postinger-app",
+        githubBackend: "https://github.com/mohammed-abdelhafiz/Postinger-backend",
+      },
       highlights: [
-        "Built a full-stack social media platform with posts, comments, likes, a follow system, and JWT-based authentication.",
-        "Replaced manual refetching with TanStack Query v5 caching and background refetch for efficient data loading.",
-        "Added optimistic UI updates for likes and comments so actions feel instant instead of waiting on a round-trip."
-      ]
+        "Managed server state with TanStack Query caching and background synchronization across a full-stack social platform with posts, comments, likes, a follow system, and JWT authentication.",
+        "Implemented optimistic UI updates for likes and comments, improving perceived responsiveness while keeping client and server state in sync.",
+      ],
     },
     {
       title: "Blogin",
       description: "Full-stack blog platform with SSR/SSG pages, Convex real-time backend, and reusable Shadcn/ui components focused on SEO-friendly rendering and fast load times.",
       tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shadcn/ui", "Convex"],
-      links: { live: "https://blogin-blog-app.vercel.app/", github: "https://github.com/mohammed-abdelhafiz/Blogin-Full-Stack-Blog-App" },
+      links: {
+        live: "https://blogin-blog-app.vercel.app/",
+        github: "https://github.com/mohammed-abdelhafiz/Blogin-Full-Stack-Blog-App",
+      },
       highlights: [
         "Built an SSR/SSG blog platform with Next.js, focused on SEO-friendly rendering and fast load times.",
         "Integrated Convex as a real-time backend so content updates appear live without a manual refresh.",
-        "Designed reusable Shadcn/ui components with strict TypeScript contracts."
-      ]
-    },
-    {
-      title: "Social Media REST API",
-      description: "REST API for social products with route/controller/service separation, refresh token rotation, MongoDB indexing, and protected resources.",
-      tech: ["Node.js", "Express.js", "MongoDB", "JWT"],
-      links: { live: "https://social-media-app-api.fly.dev/", github: "https://github.com/mohammed-abdelhafiz/postinger-social-media-api" },
-      highlights: [
-        "Clean route/controller/service layers with strict separation of concerns.",
-        "JWT refresh token rotation implementation for secure authentication.",
-        "Compound-indexed MongoDB queries for optimized data access."
-      ]
-    },
-    {
-      title: "Reading Corner",
-      description: "Book discovery app using the Google Books API with typed search, favorites, Redux Toolkit state, and responsive browsing flows.",
-      tech: ["React", "TypeScript", "Redux Toolkit"],
-      links: { live: "https://reading-corner-app.vercel.app/", github: "https://github.com/mohammed-abdelhafiz/Reading-Corner-App" },
-      highlights: [
-        "Global state management with Redux Toolkit for predictable state handling.",
-        "Real-time search and favorite management with clean user experience.",
-        "Responsive design with intuitive browsing flows."
-      ]
+        "Designed reusable Shadcn/ui components with strict TypeScript contracts.",
+      ],
     },
     {
       title: "express-ts-new-app",
       description: "npm CLI that scaffolds Express.js TypeScript projects with a clean folder structure, starter middleware, and ready-to-extend boilerplate.",
       tech: ["Node.js", "TypeScript", "JavaScript"],
-      links: { live: "https://www.npmjs.com/package/express-ts-new-app", github: "https://github.com/mohammed-abdelhafiz/express-ts-new-app" },
+      links: {
+        live: "https://www.npmjs.com/package/express-ts-new-app",
+        github: "https://github.com/mohammed-abdelhafiz/express-ts-new-app",
+      },
       highlights: [
-        "Built and published an open-source CLI that scaffolds Express + TypeScript projects in under 10 seconds.",
+        "Built and published an open-source CLI tool on npm that scaffolds Express + TypeScript projects with clean architecture and ready-to-extend boilerplate.",
         "Encoded clean architecture patterns and folder structure best practices into generated boilerplate.",
-        "Eliminated repetitive setup across backend projects, saving 20+ minutes per new project."
-      ]
-    }
+        "Eliminated repetitive setup across backend projects, saving 20+ minutes per new project.",
+      ],
+    },
   ],
   experience: [
     {
       role: "Full Stack Developer Trainee",
       company: "NTI (Ministry of Communications)",
-      period: "Jun 2025 -- Sep 2025",
-      description: "180-hour MEAN Stack Program completed with a score of 85%. Covered full-stack development fundamentals, REST API design, and Agile practices.",
+      period: "Jun 2025 – Sep 2025",
+      description: "180-hour MEAN Stack Program completed with a score of 85%. Covered full-stack fundamentals, REST API design, and Agile practices.",
       highlights: [
-        "Completed a 180-hour MEAN Stack training program covering full-stack development fundamentals, REST API design, and Agile practices.",
-        "Contributed to a team-based group project, gaining hands-on exposure to collaborative development workflows and version control.",
-        "Practiced Agile methodologies in a team environment with structured code reviews."
-      ]
-    }
+        "Completed an intensive 180-hour MEAN Stack training program covering full-stack fundamentals, REST API design, and Agile practices, including a team-based group project.",
+      ],
+    },
   ],
   education: [
     {
-      degree: "Bachelor of Science, Computer Science",
+      degree: "Bachelor of Computer Science",
       school: "Faculty of Computers and Artificial Intelligence, Benha University",
-      period: "2022 - 2026",
-      details: "GPA: 3.3 / 4.0. Data Structures, OOP, DBMS, Computer Networks, Software Engineering."
-    }
+      period: "2022 – 2026",
+      details: "GPA: 3.3 / 4.0 | Data Structures, OOP, DBMS, Computer Networks, Software Engineering.",
+    },
   ],
   certifications: [
     {
-      name: "MEAN Stack Web Developer Career Accelerator",
-      issuer: "Ministry of Communications & NTI",
+      name: "180-hour MEAN Stack Program",
+      issuer: "NTI (Ministry of Communications)",
       score: "85%",
-      link: "https://drive.google.com/file/d/1OtRaqJUOxbodcmZBY6H_DwEnne468tHi/view?usp=sharing"
-    }
-  ]
+      link: "https://drive.google.com/file/d/1OtRaqJUOxbodcmZBY6H_DwEnne468tHi/view?usp=sharing",
+    },
+  ],
 };

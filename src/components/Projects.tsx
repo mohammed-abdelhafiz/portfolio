@@ -4,12 +4,10 @@ import { motion } from "motion/react";
 import { CheckCircle2, Code2, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { CV_DATA } from "@/lib/constants";
+import { CV_DATA, Project } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-const featuredProjects = CV_DATA.projects.filter(
-  (p) => p.title !== "Social Media REST API" && p.title !== "Reading Corner"
-);
+const featuredProjects = CV_DATA.projects;
 
 const projectPreviewStyles = [
   {
@@ -19,17 +17,22 @@ const projectPreviewStyles = [
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--foreground),var(--primary))]",
-    metric: "Checkout",
-    stat: "Stripe",
+    metric: "LMS",
+    stat: "Mux/Stripe",
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--primary),var(--secondary))]",
-    metric: "Auth",
-    stat: "JWT",
+    metric: "Ecommerce",
+    stat: "Redis",
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--foreground),var(--accent))]",
-    metric: "Realtime",
+    metric: "Social",
+    stat: "TanStack",
+  },
+  {
+    panel: "bg-[linear-gradient(135deg,var(--primary),var(--foreground))]",
+    metric: "Blog",
     stat: "Convex",
   },
   {
@@ -43,8 +46,8 @@ const previewPanelVariants = {
   initial: { scale: 1 },
   hover: {
     scale: 1.03,
-    transition: { type: "spring" as const, stiffness: 300, damping: 15 }
-  }
+    transition: { type: "spring" as const, stiffness: 300, damping: 15 },
+  },
 };
 
 const barVariants = {
@@ -54,9 +57,9 @@ const barVariants = {
     transition: {
       duration: 0.8,
       ease: "easeInOut" as const,
-      delay: i * 0.1
-    }
-  })
+      delay: i * 0.1,
+    },
+  }),
 };
 
 const cardVariants = {
@@ -68,11 +71,11 @@ const cardVariants = {
       type: "spring" as const,
       stiffness: 80,
       damping: 18,
-    }
-  }
+    },
+  },
 };
 
-function ProjectPreview({ project, index }: { project: (typeof featuredProjects)[number]; index: number }) {
+function ProjectPreview({ project, index }: { project: Project; index: number }) {
   const style = projectPreviewStyles[index % projectPreviewStyles.length];
 
   return (
@@ -83,7 +86,7 @@ function ProjectPreview({ project, index }: { project: (typeof featuredProjects)
         <span className="size-2 bg-muted-foreground" />
         <span className="ml-2 h-2 flex-1 bg-muted" />
       </div>
-      <motion.div 
+      <motion.div
         variants={previewPanelVariants}
         className={cn("grid min-h-32 place-items-center border p-5 text-primary-foreground origin-center overflow-hidden", style.panel)}
       >
@@ -94,11 +97,11 @@ function ProjectPreview({ project, index }: { project: (typeof featuredProjects)
           <p className="text-3xl font-bold leading-none">{style.stat}</p>
           <div className="mt-5 grid grid-cols-3 gap-2">
             {[0, 1, 2].map((i) => (
-              <motion.span 
-                key={i} 
+              <motion.span
+                key={i}
                 custom={i}
                 variants={barVariants}
-                className="h-10 border border-primary-foreground/25 bg-primary-foreground/15 origin-bottom" 
+                className="h-10 border border-primary-foreground/25 bg-primary-foreground/15 origin-bottom"
               />
             ))}
           </div>
@@ -131,7 +134,7 @@ export function Projects() {
   return (
     <section id="projects" className="border-b overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 py-16 md:py-24 2xl:px-0">
-        <motion.div 
+        <motion.div
           className="mb-12 grid gap-8 lg:grid-cols-[0.7fr_1fr]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -143,11 +146,11 @@ export function Projects() {
             <h2 className="mb-8 text-3xl font-bold leading-none md:text-5xl">Projects with product surface and backend depth.</h2>
           </div>
           <p className="max-w-[70ch] self-end text-base leading-relaxed text-muted-foreground">
-            These projects show the range from ecommerce and social products to backend APIs and developer tooling.
+            These featured projects demonstrate end-to-end full-stack capabilities, ranging from 3D WebGL collaboration platforms and LMS e-learning systems to production e-commerce and social platforms.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="grid gap-6 lg:grid-cols-2"
           initial="hidden"
           whileInView="visible"
@@ -156,14 +159,14 @@ export function Projects() {
             hidden: {},
             visible: {
               transition: {
-                staggerChildren: 0.15
-              }
-            }
+                staggerChildren: 0.15,
+              },
+            },
           }}
         >
           {featuredProjects.map((project, index) => (
-            <motion.article 
-              key={project.title} 
+            <motion.article
+              key={project.title}
               variants={cardVariants}
               whileHover="hover"
               className="group grid border bg-card md:grid-cols-[0.7fr_1.2fr] transition-colors duration-300 hover:border-primary"
@@ -176,28 +179,68 @@ export function Projects() {
                       {project.title}
                     </h3>
                     <div className="flex shrink-0 gap-1">
-                      <motion.a
-                        href={project.links.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${project.title} GitHub repository`}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background")}
-                      >
-                        <Code2 />
-                      </motion.a>
-                      <motion.a
-                        href={project.links.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${project.title} live project`}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background")}
-                      >
-                        <ExternalLink />
-                      </motion.a>
+                      {project.links.github && (
+                        <motion.a
+                          href={project.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.title} GitHub repository`}
+                          title="GitHub Repository"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background")}
+                        >
+                          <Code2 />
+                        </motion.a>
+                      )}
+                      {project.links.githubFrontend && (
+                        <motion.a
+                          href={project.links.githubFrontend}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.title} Frontend GitHub repository`}
+                          title="Frontend GitHub Repo"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background relative")}
+                        >
+                          <Code2 className="size-4" />
+                          <span className="absolute -bottom-1 -right-1 bg-primary text-[9px] font-bold text-primary-foreground px-0.5 leading-none">
+                            F
+                          </span>
+                        </motion.a>
+                      )}
+                      {project.links.githubBackend && (
+                        <motion.a
+                          href={project.links.githubBackend}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.title} Backend GitHub repository`}
+                          title="Backend GitHub Repo"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background relative")}
+                        >
+                          <Code2 className="size-4" />
+                          <span className="absolute -bottom-1 -right-1 bg-accent text-[9px] font-bold text-accent-foreground px-0.5 leading-none">
+                            B
+                          </span>
+                        </motion.a>
+                      )}
+                      {project.links.live && (
+                        <motion.a
+                          href={project.links.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${project.title} live project`}
+                          title="Live Project"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-none bg-background")}
+                        >
+                          <ExternalLink />
+                        </motion.a>
+                      )}
                     </div>
                   </div>
                   <p className="mb-6 text-base leading-relaxed text-muted-foreground">{project.description}</p>

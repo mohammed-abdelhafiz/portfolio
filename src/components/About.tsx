@@ -148,7 +148,7 @@ export function About() {
               <div>
                 <h2 className="mb-3 text-2xl font-semibold leading-tight">Ship full-stack features</h2>
                 <p className="max-w-[60ch] text-base leading-relaxed text-muted-foreground">
-                  I build typed React and Next.js frontends connected to structured Node, Express, MongoDB, and Convex backends.
+                  I build typed React and Next.js frontends connected to resilient Node.js, Express, .NET, PostgreSQL, and MongoDB backends.
                 </p>
               </div>
             </article>
