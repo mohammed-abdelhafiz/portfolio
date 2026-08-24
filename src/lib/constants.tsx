@@ -26,7 +26,7 @@ export const CV_DATA = {
   email: "mohamed.abdelhafiz.dev@gmail.com",
   cvUrl: "/Mohamed_Abdelhafiz_CV.pdf",
   summary:
-    "Full-Stack Developer specializing in React, Next.js, TypeScript, and Node.js. Built scalable full-stack applications featuring real-time communication, authentication, payment processing, and learning management systems. Led frontend development of CollabSpace, a browser-based 3D collaboration platform integrating Unity WebGL, Flutter, and a .NET backend.",
+    "Full-Stack Developer specializing in React, Next.js, NestJS, TypeScript, and PostgreSQL/MongoDB. Built scalable full-stack applications featuring real-time collaboration, video/chat, authentication, and payment processing – including CodeSync, a real-time collaborative coding platform, and Blogin, a real-time blogging platform built on Convex.",
   links: [
     {
       name: "GitHub",
@@ -53,13 +53,66 @@ export const CV_DATA = {
   skills: [
     { category: "Languages", items: ["JavaScript", "TypeScript"] },
     { category: "Frontend", items: ["React.js", "Next.js", "HTML5", "CSS3", "Tailwind CSS", "shadcn/ui", "Framer Motion", "Responsive Design"] },
-    { category: "Backend & Real-Time", items: ["Node.js", "Express.js", "REST API Design", "SignalR", "WebSockets", "JWT", "Cookies", "Authentication & Authorization"] },
-    { category: "Database & Caching", items: ["MongoDB", "Mongoose", "PostgreSQL", "Prisma ORM", "Redis"] },
+    { category: "Backend & Real-Time", items: ["Node.js", "NestJS", "Express.js", "REST API Design", "Real-Time Data (Stream, Convex)", "JWT", "Authentication & Authorization"] },
+    { category: "Database & Caching", items: ["MongoDB", "Mongoose", "PostgreSQL", "Prisma", "TypeORM", "Redis"] },
     { category: "State & Forms", items: ["TanStack Query", "Zustand", "nuqs", "React Hook Form", "Zod"] },
-    { category: "Payments & Tools", items: ["Stripe", "Clerk", "Git", "GitHub", "Docker", "Postman", "VS Code"] },
-    { category: "Other", items: ["System Design Fundamentals", "Agile/Scrum", "Proxy & Singleton Patterns", "published CLI tool on npmjs.com/package/express-ts-new-app"] },
+    { category: "Payments & Tools", items: ["Stripe", "Clerk", "Git", "GitHub", "Docker", "Fly.io", "Postman", "VS Code"] },
   ],
   projects: [
+    {
+      title: "CodeSync",
+      description: "Full-stack real-time collaborative coding platform pairing a Next.js/Monaco editor frontend with a NestJS + PostgreSQL backend for multi-user live coding sessions.",
+      tech: ["Next.js 16", "NestJS", "TypeScript", "PostgreSQL", "TypeORM", "Clerk", "Monaco Editor", "Stream Video SDK", "Stream Chat", "Inngest", "Docker"],
+      links: {
+        live: "https://codesync-live.vercel.app",
+        githubFrontend: "https://github.com/mohammed-abdelhafiz/CodeSync-frontend",
+        githubBackend: "https://github.com/mohammed-abdelhafiz/CodeSync-backend",
+      },
+      highlights: [
+        "Built a full-stack real-time collaborative coding platform pairing a Next.js/Monaco editor frontend with a NestJS + PostgreSQL backend for multi-user live coding sessions.",
+        "Integrated Stream Video SDK and Stream Chat for in-session video calls and chat, with Clerk auth shared across frontend and backend, TypeORM persistence, and Inngest background jobs, deployed on Fly.io + Vercel.",
+      ],
+    },
+    {
+      title: "Course+",
+      description: "Full-stack learning management system with Clerk authentication and role-based access, letting instructors create and monetize courses while students purchase and track progress.",
+      tech: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL", "Prisma", "Clerk", "Stripe", "Mux", "UploadThing", "Zustand", "React Hook Form", "Zod"],
+      links: {
+        live: "https://course-plus-lms.vercel.app",
+        github: "https://github.com/mohammed-abdelhafiz/Course-Plus-lms",
+      },
+      highlights: [
+        "Built a full-stack e-learning platform with Clerk authentication and role-based access, letting instructors create and monetize courses while students purchase and track progress.",
+        "Integrated Stripe Checkout with webhooks for course purchases and Mux for adaptive video streaming, backed by Prisma + PostgreSQL and an instructor revenue dashboard.",
+      ],
+    },
+    {
+      title: "Blogin",
+      description: "Full-stack real-time blogging platform on Next.js 16 and Convex, using serverless functions and a real-time database for instant article and comment syncing without manual polling.",
+      tech: ["Next.js 16", "React 19", "TypeScript", "Convex", "Better Auth", "Tailwind CSS v4", "Radix UI", "React Hook Form", "Zod"],
+      links: {
+        live: "https://blogin-blog-app.vercel.app/",
+        github: "https://github.com/mohammed-abdelhafiz/Blogin-Full-Stack-Blog-App",
+      },
+      highlights: [
+        "Built a full-stack blogging platform on Next.js 16 and Convex, using serverless functions and a real-time database for instant article and comment syncing without manual polling.",
+        "Implemented authentication with Better Auth and modeled the article/comment schema in Convex, adding full-text search and image storage for article content.",
+      ],
+    },
+    {
+      title: "MoCommerce",
+      description: "Full-stack e-commerce system backed by JWT authentication, Stripe payments, and Redis caching for cart and session data.",
+      tech: ["Next.js", "React", "Node.js", "Express 5", "MongoDB", "Mongoose", "TypeScript", "Stripe", "Redis", "TanStack Query", "Zustand"],
+      links: {
+        live: "https://mo-commerce-app.vercel.app",
+        githubFrontend: "https://github.com/mohammed-abdelhafiz/MoCommerce-app",
+        githubBackend: "https://github.com/mohammed-abdelhafiz/MoCommerce-backend",
+      },
+      highlights: [
+        "Cut redundant database reads by caching cart and session data in Redis, backing a full-stack e-commerce platform with JWT authentication and Stripe payments.",
+        "Optimized page performance by structuring the storefront's data fetching around Next.js App Router Server Components, keeping the checkout flow fast on first load.",
+      ],
+    },
     {
       title: "CollabSpace",
       description: "Browser-based 3D virtual collaboration platform integrating Unity WebGL 3D, Flutter mobile, and a .NET 8 + SignalR backend with real-time chat and notifications (Graduation Project).",
@@ -74,33 +127,6 @@ export const CV_DATA = {
       ],
     },
     {
-      title: "Course+",
-      description: "Full-stack learning management system letting instructors create and monetize courses while students purchase and track progress.",
-      tech: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL", "Prisma", "Clerk", "Stripe", "Mux", "UploadThing", "Zustand", "React Hook Form", "Zod"],
-      links: {
-        live: "https://course-plus-lms.vercel.app",
-        github: "https://github.com/mohammed-abdelhafiz/Course-Plus-lms",
-      },
-      highlights: [
-        "Built a full-stack e-learning platform with Clerk authentication and role-based access, letting instructors create and monetize courses while students purchase and track progress.",
-        "Integrated Stripe Checkout with webhooks for course purchases and Mux for adaptive video streaming, backed by Prisma + PostgreSQL and an analytics dashboard for instructor revenue and sales.",
-      ],
-    },
-    {
-      title: "MoCommerce",
-      description: "Full-stack e-commerce system backed by JWT authentication, Stripe payments, and Redis caching for cart and session data.",
-      tech: ["Next.js", "React", "Node.js", "Express 5", "MongoDB", "Mongoose", "TypeScript", "Stripe", "Redis", "TanStack Query", "Zustand"],
-      links: {
-        live: "https://mo-commerce-app.vercel.app",
-        githubFrontend: "https://github.com/mohammed-abdelhafiz/MoCommerce-app",
-        githubBackend: "https://github.com/mohammed-abdelhafiz/MoCommerce-backend",
-      },
-      highlights: [
-        "Cut redundant database reads by caching cart and session data in Redis, backing a full-stack e-commerce platform with JWT authentication and Stripe payments.",
-        "Optimized page performance by structuring the storefront's data fetching around Next.js App Router Server Components, eliminating client-side waterfalls and keeping the checkout flow's critical path fast on first load.",
-      ],
-    },
-    {
       title: "Postinger",
       description: "Full-stack social media platform with posts, comments, likes, follow system, background sync, and optimistic UI updates.",
       tech: ["Next.js", "React", "TypeScript", "Node.js", "Express", "MongoDB", "Mongoose", "JWT", "TanStack Query"],
@@ -112,20 +138,6 @@ export const CV_DATA = {
       highlights: [
         "Managed server state with TanStack Query caching and background synchronization across a full-stack social platform with posts, comments, likes, a follow system, and JWT authentication.",
         "Implemented optimistic UI updates for likes and comments, improving perceived responsiveness while keeping client and server state in sync.",
-      ],
-    },
-    {
-      title: "Blogin",
-      description: "Full-stack blog platform with SSR/SSG pages, Convex real-time backend, and reusable Shadcn/ui components focused on SEO-friendly rendering and fast load times.",
-      tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Shadcn/ui", "Convex"],
-      links: {
-        live: "https://blogin-blog-app.vercel.app/",
-        github: "https://github.com/mohammed-abdelhafiz/Blogin-Full-Stack-Blog-App",
-      },
-      highlights: [
-        "Built an SSR/SSG blog platform with Next.js, focused on SEO-friendly rendering and fast load times.",
-        "Integrated Convex as a real-time backend so content updates appear live without a manual refresh.",
-        "Designed reusable Shadcn/ui components with strict TypeScript contracts.",
       ],
     },
     {
@@ -150,7 +162,7 @@ export const CV_DATA = {
       period: "Jun 2025 – Sep 2025",
       description: "180-hour MEAN Stack Program completed with a score of 85%. Covered full-stack fundamentals, REST API design, and Agile practices.",
       highlights: [
-        "Completed an intensive 180-hour MEAN Stack training program covering full-stack fundamentals, REST API design, and Agile practices, including a team-based group project.",
+        "Completed an intensive 180-hour MEAN Stack training program covering full-stack fundamentals, REST API design, and Agile practices, including a team-based group project. Published express-ts-new-app, an open-source CLI tool on npm.",
       ],
     },
   ],

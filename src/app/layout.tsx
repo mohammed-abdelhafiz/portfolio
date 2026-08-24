@@ -13,13 +13,13 @@ const chakraPetch = Chakra_Petch({
 export const metadata: Metadata = {
   title: `${CV_DATA.name} | ${CV_DATA.title}`,
   description: CV_DATA.summary,
-  keywords: ["Full Stack Developer", "Next.js", "React", "Node.js", "Portfolio", "Mohamed Abdelhafiz"],
+  keywords: ["Full Stack Developer", "Next.js", "React", "NestJS", "TypeScript", "PostgreSQL", "MongoDB", "Convex", "Stream", "Portfolio", "Mohamed Abdelhafiz"],
   authors: [{ name: CV_DATA.name }],
   openGraph: {
     title: `${CV_DATA.name} | ${CV_DATA.title}`,
     description: CV_DATA.summary,
     type: "website",
-    url: "https://portfolio-tau-nine-48.vercel.app/",
+    url: "https://mohamed-abdelhafiz.vercel.app",
   },
 };
 

@@ -12,33 +12,38 @@ const featuredProjects = CV_DATA.projects;
 const projectPreviewStyles = [
   {
     panel: "bg-[linear-gradient(135deg,var(--primary),var(--accent))]",
-    metric: "3D",
-    stat: "WebGL",
+    metric: "Live Coding",
+    stat: "Monaco/Stream",
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--foreground),var(--primary))]",
-    metric: "LMS",
+    metric: "LMS Platform",
     stat: "Mux/Stripe",
   },
   {
+    panel: "bg-[linear-gradient(135deg,var(--primary),var(--foreground))]",
+    metric: "Real-Time Blog",
+    stat: "Convex DB",
+  },
+  {
     panel: "bg-[linear-gradient(135deg,var(--primary),var(--secondary))]",
-    metric: "Ecommerce",
-    stat: "Redis",
+    metric: "E-Commerce",
+    stat: "Redis/Stripe",
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--foreground),var(--accent))]",
-    metric: "Social",
-    stat: "TanStack",
+    metric: "3D Virtual Space",
+    stat: "WebGL/SignalR",
   },
   {
-    panel: "bg-[linear-gradient(135deg,var(--primary),var(--foreground))]",
-    metric: "Blog",
-    stat: "Convex",
+    panel: "bg-[linear-gradient(135deg,var(--foreground),var(--primary))]",
+    metric: "Social Platform",
+    stat: "TanStack/JWT",
   },
   {
     panel: "bg-[linear-gradient(135deg,var(--foreground),var(--secondary))]",
-    metric: "CLI",
-    stat: "npm",
+    metric: "CLI Tool",
+    stat: "npm Package",
   },
 ];
 
@@ -146,7 +151,7 @@ export function Projects() {
             <h2 className="mb-8 text-3xl font-bold leading-none md:text-5xl">Projects with product surface and backend depth.</h2>
           </div>
           <p className="max-w-[70ch] self-end text-base leading-relaxed text-muted-foreground">
-            These featured projects demonstrate end-to-end full-stack capabilities, ranging from 3D WebGL collaboration platforms and LMS e-learning systems to production e-commerce and social platforms.
+            These featured projects demonstrate end-to-end full-stack capabilities, ranging from real-time collaborative coding platforms and video streaming LMS systems to production e-commerce and 3D virtual spaces.
           </p>
         </motion.div>
 
